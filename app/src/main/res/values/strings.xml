@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">BakingApp</string>
+    <string name="app_name">Baking Time</string>
     <string name="recipe">Recipe</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="previous">&lt;- PREV</string>
+    <string name="next">NEXT -&gt;</string>
+    <string name="ingredientsTitle">Ingredients</string>
+    <string name="directions">Directions</string>
 </resources>

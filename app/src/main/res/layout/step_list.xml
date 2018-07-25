@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".ItemListActivity"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/sixteen"
+        android:layout_marginStart="@dimen/sixteen"
+        android:text="@string/ingredientsTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/two"
+        android:layout_margin="@dimen/eight"
+        android:background="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen"
+        android:id="@+id/ingredientsList"
+        android:textColor="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/two"
+        android:layout_marginLeft="@dimen/eight"
+        android:layout_marginStart="@dimen/eight"
+        android:layout_marginRight="@dimen/eight"
+        android:layout_marginEnd="@dimen/eight"
+        android:layout_marginBottom="@dimen/eight"
+        android:background="@color/white"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/sixteen"
+        android:layout_marginStart="@dimen/sixteen"
+        android:text="@string/directions"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white"/>
+
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/step_list"
+    android:name="com.josehinojo.bakingapp.StepListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/sixteen"
+    android:layout_marginRight="@dimen/sixteen"
+    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+    tools:context=".StepListActivity"
+    tools:listitem="@layout/step_list_content" />
+
+</LinearLayout>
