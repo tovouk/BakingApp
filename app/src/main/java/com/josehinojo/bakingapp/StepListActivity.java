@@ -1,5 +1,7 @@
 package com.josehinojo.bakingapp;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -52,7 +54,7 @@ public class StepListActivity extends AppCompatActivity {
         View recyclerView = findViewById(R.id.step_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
-
+        UpdateWidgetService.handleWidgetUpdate(recipe,getApplicationContext());
     }
 
     @Override

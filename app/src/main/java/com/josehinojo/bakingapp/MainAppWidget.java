@@ -3,22 +3,38 @@ package com.josehinojo.bakingapp;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.josehinojo.bakingapp.Recipe.Ingredient;
+import com.josehinojo.bakingapp.Recipe.ParcelableRecipe;
+
+import java.util.ArrayList;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class MainAppWidget extends AppWidgetProvider {
 
+    static ParcelableRecipe recipe;
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+                                int appWidgetId,ParcelableRecipe recipe1) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        String str = "";
         // Construct the RemoteViews object
-        RemoteViews views = startApp(context);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        Intent intent = new Intent(context,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
+        RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.main_app_widget);
+        ArrayList<Ingredient> ingredients= recipe1.getIngredients();
+        for(int i =0;i<ingredients.size();i++){
+            Ingredient ingredient = ingredients.get(i);
+            str += ingredient.getQuantity() + " " + ingredient.getUnitOfMeasurement() + " " + ingredient.getIngredient() + "\n";
+        }
+        views.setTextViewText(R.id.appwidget_text,str);
+        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -26,18 +42,14 @@ public class MainAppWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+            UpdateWidgetService.startActionSetText(context,recipe);
     }
 
-    public static RemoteViews startApp(Context context){
-        Intent intent = new Intent(context,MainActivity.class);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.main_app_widget);
-        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
-        return views;
+    public static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds,
+                                          ParcelableRecipe recipe) {
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId, recipe);
+        }
     }
 
     @Override

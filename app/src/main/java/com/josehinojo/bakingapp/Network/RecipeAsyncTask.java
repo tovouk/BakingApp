@@ -1,13 +1,16 @@
 package com.josehinojo.bakingapp.Network;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.josehinojo.bakingapp.MainAppWidget;
 import com.josehinojo.bakingapp.Recipe.Ingredient;
 import com.josehinojo.bakingapp.Recipe.ParcelableRecipe;
 import com.josehinojo.bakingapp.Recipe.RecipeListAdapter;
 import com.josehinojo.bakingapp.Recipe.Step;
+import com.josehinojo.bakingapp.UpdateWidgetService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,6 +77,7 @@ public class RecipeAsyncTask extends AsyncTask<URL, Void, String> {
         super.onPostExecute(s);
         try{
             JSONArray results = new JSONArray(s);
+            recipes.clear();
             for(int i =0;i<results.length();i++){
                 JSONObject recipe = results.getJSONObject(i);
                 int id = recipe.getInt("id");
@@ -110,6 +114,7 @@ public class RecipeAsyncTask extends AsyncTask<URL, Void, String> {
                 recipes.add(parcelableRecipe);
                 recipeListAdapter.notifyDataSetChanged();
             }
+            UpdateWidgetService.handleWidgetUpdate(recipes.get(recipes.size()-1),context);
         }catch (JSONException e){
             e.printStackTrace();
         }

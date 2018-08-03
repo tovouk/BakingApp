@@ -35,6 +35,7 @@
         <receiver android:name=".MainAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.josehinojo.bakingapp.SET_TEXT"/>
             </intent-filter>
 
             <meta-data

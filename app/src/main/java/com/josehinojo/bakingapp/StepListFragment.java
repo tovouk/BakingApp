@@ -3,12 +3,14 @@ package com.josehinojo.bakingapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +39,9 @@ import java.util.ArrayList;
 
 public class StepListFragment extends Fragment {
 
+
+    public static final String PREFS_NAME = "com.josehinojo.BakingApp.sharedPref";
+
     //ExoPlayer Implementation modeled after this link https://codelabs.developers.google.com/codelabs/exoplayer-intro/#2
     //as lesson code is deprecated at the time of writing
 
@@ -60,27 +65,39 @@ public class StepListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-        player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(getActivity()),
-                new DefaultTrackSelector(), new DefaultLoadControl());
         if(getActivity().getIntent().getExtras().containsKey(ARG_STEP_ID)){
             step = getActivity().getIntent().getExtras().getParcelable(ARG_STEP_ID);
             stepList = getActivity().getIntent().getExtras().getParcelableArrayList("stepList");
+            playbackposition = getActivity().getIntent().getExtras().getLong("playbackPosition");
+            playWhenReady = getActivity().getIntent().getExtras().getBoolean("playWhenReady");
+            window = getActivity().getIntent().getExtras().getInt("window");
             tablet = false;
         }else{
             step = getArguments().getParcelable(ARG_STEP_ID);
             stepList = getArguments().getParcelableArrayList("stepList");
+            playbackposition = getArguments().getLong("playbackPosition");
+            playWhenReady = getArguments().getBoolean("playWhenReady");
+            window = getArguments().getInt("window");
             tablet = true;
         }
-    }
 
+        if(savedInstanceState == null){
+            player = ExoPlayerFactory.newSimpleInstance(
+                    new DefaultRenderersFactory(getActivity()),
+                    new DefaultTrackSelector(), new DefaultLoadControl());
+        }else{
+            player.setPlayWhenReady(playWhenReady);
+            player.seekTo(window,playbackposition);
+        }
+
+    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(ARG_STEP_ID,step);
+        outState.putLong("playbackPosition",playbackposition);
+        outState.putBoolean("playWhenReady",playWhenReady);
+        outState.putInt("window",window);
     }
 
     @Nullable
@@ -157,9 +174,14 @@ public class StepListFragment extends Fragment {
 
 
     private void initializePlayer() {
-        player = ExoPlayerFactory.newSimpleInstance(
-                new DefaultRenderersFactory(getContext()),
-                new DefaultTrackSelector(), new DefaultLoadControl());
+        if(window == 0){
+            player = ExoPlayerFactory.newSimpleInstance(
+                    new DefaultRenderersFactory(getActivity()),
+                    new DefaultTrackSelector(), new DefaultLoadControl());
+        }else{
+            player.setPlayWhenReady(playWhenReady);
+            player.seekTo(window,playbackposition);
+        }
         playerView.setPlayer(player);
         if(!tablet){
             playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
@@ -189,8 +211,8 @@ public class StepListFragment extends Fragment {
         }
     }
 
-    //The following two methods originate from https://medium.com/fungjai/playing-video-by-exoplayer-b97903be0b33
-    //The purpose is to make the video fullscreen on landscape mode
+//    The following two methods originate from https://medium.com/fungjai/playing-video-by-exoplayer-b97903be0b33
+//    The purpose is to make the video fullscreen on landscape mode
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -249,7 +271,8 @@ public class StepListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
+        player.seekTo(window,playbackposition);
+        player.setPlayWhenReady(playWhenReady);
         if ((Util.SDK_INT <= 23 || player == null)) {
             initializePlayer();
         }
@@ -263,6 +286,9 @@ public class StepListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        playWhenReady = player.getPlayWhenReady();
+        playbackposition = player.getCurrentPosition();
+        window = player.getCurrentWindowIndex();
         if (Util.SDK_INT <= 23) {
             releasePlayer();
         }

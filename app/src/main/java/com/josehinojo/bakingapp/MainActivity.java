@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
                     recipeAsyncTask.setRecipeParams(recipeAdapter, recipeList);
                     recipeAsyncTask.execute(url);
                     showRecipes();
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     showError();

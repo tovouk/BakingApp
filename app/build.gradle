@@ -5,7 +5,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.josehinojo.bakingapp"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -36,4 +36,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
     implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
+    //suggested from previous review link: https://github.com/rubensousa/PreviewSeekBar
+    implementation 'com.github.rubensousa:previewseekbar:2.0.0'
+    implementation 'com.github.rubensousa:previewseekbar-exoplayer:2.8.1.0'
+
 }
