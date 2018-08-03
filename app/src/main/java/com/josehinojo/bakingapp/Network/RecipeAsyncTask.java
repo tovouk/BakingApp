@@ -95,6 +95,7 @@ public class RecipeAsyncTask extends AsyncTask<URL, Void, String> {
                 JSONArray jsonSteps = new JSONArray(recipe.getString("steps"));
                 ArrayList<Step> steps = new ArrayList<>();
                 for (int k = 0;k<jsonSteps.length();k++){
+                    //gets a step JSONOBject
                     JSONObject step = jsonSteps.getJSONObject(k);
                     int stepId = step.getInt("id");
                     String shortDesc = step.getString("shortDescription");
@@ -103,6 +104,7 @@ public class RecipeAsyncTask extends AsyncTask<URL, Void, String> {
                     String thumbUrl = step.getString("thumbnailURL");
                     Step step1 = new Step(stepId,shortDesc,desc,vidUrl,thumbUrl);
                     steps.add(step1);
+
                 }
                 ParcelableRecipe parcelableRecipe = new ParcelableRecipe(id,name,ingredients,steps,servings,image);
                 recipes.add(parcelableRecipe);

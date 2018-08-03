@@ -10,6 +10,8 @@ public class Step implements Parcelable{
     private String description;
     private String videoUrl;
     private String thumbnailUrl;
+    private Step nextStep;
+    private Step prevStep;
 
     public void setId(int id) {
         this.id = id;
@@ -31,6 +33,14 @@ public class Step implements Parcelable{
         this.thumbnailUrl = thumbnailUrl;
     }
 
+    public void setNextStep(Step nextStep){
+        this.nextStep = nextStep;
+    }
+
+    public void setPrevStep(Step prevStep){
+        this.prevStep = prevStep;
+    }
+
     public int getId() {
         return id;
     }
@@ -49,6 +59,14 @@ public class Step implements Parcelable{
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
+    }
+
+    public Step getNextStep() {
+        return nextStep;
+    }
+
+    public Step getPrevStep() {
+        return prevStep;
     }
 
     public Step(){}

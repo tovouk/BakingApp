@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".StepDetailActivity"
-    tools:ignore="MergeRootFrame">
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/steps_detail_container"
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="wrap_content"
+        tools:context=".StepDetailActivity"
+        tools:ignore="MergeRootFrame">
 
-</android.support.design.widget.CoordinatorLayout>
+        <FrameLayout
+            android:id="@+id/steps_detail_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+        <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/sixty_four"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layout_behavior="@string/bottom_sheet_behavior">-->
+
+
+            <!--<Button-->
+                <!--android:id="@+id/prevButton"-->
+                <!--android:layout_width="88dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:layout_margin="@dimen/eight"-->
+                <!--android:minHeight="@dimen/sixty_four"-->
+                <!--android:text="@string/previous"-->
+                <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+            <!--<Button-->
+                <!--android:id="@+id/nextButton"-->
+                <!--android:layout_width="88dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:layout_margin="@dimen/eight"-->
+                <!--android:minHeight="@dimen/sixty_four"-->
+                <!--android:text="@string/next"-->
+                <!--app:layout_constraintEnd_toEndOf="parent" />-->
+        <!--</android.support.constraint.ConstraintLayout>-->
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</ScrollView>
+
 

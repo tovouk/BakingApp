@@ -10,7 +10,8 @@
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/twotwentyfive">
+        android:minHeight="@dimen/threehundred"
+        app:resize_mode="fit">
 
     </com.google.android.exoplayer2.ui.PlayerView>
 
@@ -27,25 +28,29 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintTop_toBottomOf="@+id/video"/>
 
-    <Button
-        android:id="@+id/prevButton"
-        android:layout_width="88dp"
-        android:layout_height="64dp"
-        android:layout_margin="@dimen/eight"
-        android:minHeight="@dimen/sixty_four"
-        android:text="@string/previous"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="88dp"
-        android:layout_height="64dp"
-        android:layout_margin="@dimen/eight"
-        android:minHeight="@dimen/sixty_four"
-        android:text="@string/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sixty_four"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/stepDescription">
 
 
+        <Button
+            android:id="@+id/prevButton"
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:layout_margin="@dimen/eight"
+            android:minHeight="@dimen/sixty_four"
+            android:text="@string/previous"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:layout_margin="@dimen/eight"
+            android:minHeight="@dimen/sixty_four"
+            android:text="@string/next"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

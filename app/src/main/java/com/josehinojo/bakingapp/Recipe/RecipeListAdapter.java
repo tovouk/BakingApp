@@ -13,9 +13,6 @@ import com.josehinojo.bakingapp.R;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.MyViewHolder>{
     ArrayList<ParcelableRecipe> recipeList;
     Context context;

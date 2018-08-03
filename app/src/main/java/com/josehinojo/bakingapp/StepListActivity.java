@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,11 @@ public class StepListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
         ButterKnife.bind(this);
-        recipe = getIntent().getParcelableExtra("recipe");
+        if(savedInstanceState != null){
+            recipe = savedInstanceState.getParcelable("recipe");
+        }else {
+            recipe = getIntent().getParcelableExtra("recipe");
+        }
         setTitle(recipe.getName());
         String str = "";
         for (int i = 0; i<recipe.getIngredients().size();i++){
@@ -50,6 +53,14 @@ public class StepListActivity extends AppCompatActivity {
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(mTwoPane) {
+            outState.putParcelable("recipe", recipe);
+        }
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
@@ -69,6 +80,7 @@ public class StepListActivity extends AppCompatActivity {
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
                     arguments.putParcelable(StepListFragment.ARG_STEP_ID, step);
+                    arguments.putParcelableArrayList("stepList",mValues);
                     StepListFragment fragment = new StepListFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
@@ -78,6 +90,7 @@ public class StepListActivity extends AppCompatActivity {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, StepDetailActivity.class);
                     intent.putExtra(StepListFragment.ARG_STEP_ID, step);
+                    intent.putParcelableArrayListExtra("stepList",mValues);
 
                     context.startActivity(intent);
                 }

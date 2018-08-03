@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".ItemListActivity"
+    tools:context=".StepListActivity"
     android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
