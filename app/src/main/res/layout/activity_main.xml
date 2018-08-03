@@ -43,6 +43,15 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/networkError"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tryAgain"
+            android:layout_marginTop="@dimen/sixteen"
+            android:onClick="tryAgain"
+            android:gravity="center"
+            android:text="@string/tryAgain"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

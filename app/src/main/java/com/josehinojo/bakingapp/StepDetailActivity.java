@@ -34,8 +34,7 @@ public class StepDetailActivity extends AppCompatActivity {
                     .commit();
 
         }else{
-            step = savedInstanceState.getParcelable(StepListFragment.ARG_STEP_ID);
-            stepList = savedInstanceState.getParcelableArrayList("stepList");
+
         }
 
 

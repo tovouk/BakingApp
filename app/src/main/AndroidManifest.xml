@@ -13,7 +13,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,10 +27,12 @@
         <activity
             android:name=".StepListActivity"
             android:theme="@style/AppTheme"
+            android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"/>
         <activity
             android:name=".StepDetailActivity"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen"
+            android:launchMode="singleTop"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"/>
 
         <receiver android:name=".MainAppWidget">

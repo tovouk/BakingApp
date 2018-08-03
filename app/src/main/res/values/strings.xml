@@ -5,6 +5,7 @@
     <string name="next">NEXT -&gt;</string>
     <string name="ingredientsTitle">Ingredients</string>
     <string name="directions">Directions</string>
-    <string name="appwidget_text">Check out our Recipes: click now</string>
+    <string name="appwidget_text">Open the App to start or click here</string>
     <string name="networkError">Error Detecting network</string>
+    <string name="tryAgain">Try Again</string>
 </resources>

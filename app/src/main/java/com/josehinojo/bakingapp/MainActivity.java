@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -41,11 +42,24 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
     LinearLayout linearLayout;
     @BindView(R.id.loader)ProgressBar loader;
     @BindView(R.id.netWorkError)TextView networkError;
+    @BindView(R.id.tryAgain)Button tryAgain;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //code from : https://stackoverflow.com/questions/16126511/app-completely-restarting-when-launched-by-icon-press-in-launcher
+        //purpose is to utilize activities android:launchMode="singleTop" attribute and resume the proper activity when
+        //opening via launcher icon
+        if (!isTaskRoot())
+        {
+            final Intent intent = getIntent();
+            final String intentAction = intent.getAction();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && intentAction != null && intentAction.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -94,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(recipeList.size()>0) {
+            UpdateWidgetService.handleWidgetUpdate(recipeList.get(recipeList.size() - 1), getApplicationContext());
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("recipeList", recipeList);
         super.onSaveInstanceState(outState);
@@ -110,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         scrollView.setVisibility(View.GONE);
         linearLayout.setVisibility(View.VISIBLE);
         networkError.setVisibility(View.GONE);
+        tryAgain.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
     }
     public void showRecipes(){
@@ -121,6 +149,31 @@ public class MainActivity extends AppCompatActivity implements RecipeListAdapter
         linearLayout.setVisibility(View.VISIBLE);
         loader.setVisibility(View.GONE);
         networkError.setVisibility(View.VISIBLE);
+        tryAgain.setVisibility(View.VISIBLE);
+    }
+    public void tryAgain(View view){
+            ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+            if(netInfo != null && netInfo.isConnected()) {
+                try {
+                    URL url = new URL(RECIPE_URL);
+                    RecipeAsyncTask recipeAsyncTask = new RecipeAsyncTask();
+                    recipeAsyncTask.setContext(getApplicationContext());
+                    recipeAsyncTask.setRecipeParams(recipeAdapter, recipeList);
+                    recipeAsyncTask.execute(url);
+                    showRecipes();
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    showError();
+                }
+            }else{
+                showError();
+            }
+
+        mainRecyclerView.setAdapter(recipeAdapter);
+        recipeAdapter.notifyDataSetChanged();
     }
 
 }

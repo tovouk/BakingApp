@@ -8,6 +8,8 @@
     <dimen name="forty">40dp</dimen>
     <dimen name="sixty_four">64dp</dimen>
     <dimen name="oneHundred">100dp</dimen>
+    <dimen name="oneten">110dp</dimen>
+    <dimen name="oneEight">180dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="twotwentyfive">225dp</dimen>
